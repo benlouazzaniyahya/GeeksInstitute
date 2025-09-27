@@ -1,0 +1,10 @@
+[project]
+name = "week_1_project"
+version = "0.1.0"
+description = "Flask CRUD API for student records (week 1 assessment)"
+authors = ["Your Name <you@example.com>"]
+requires-python = ">=3.9"
+
+[project.dependencies]
+python-dotenv = ">=1.1.1"
+Flask = ">=3.1.2"

@@ -1,0 +1,39 @@
+### Get all students (default pagination)
+GET http://127.0.0.1:5001/students
+Accept: application/json
+
+### Get all students (page=1 limit=2)
+GET http://127.0.0.1:5001/students?page=1&limit=2
+Accept: application/json
+
+### Get specific student (id=1)
+GET http://127.0.0.1:5001/students/1
+Accept: application/json
+
+### Try get non-existent student
+GET http://127.0.0.1:5001/students/999
+Accept: application/json
+
+### Create a new student
+POST http://127.0.0.1:5001/students
+Content-Type: application/json
+
+{
+  "name": "Alice Smith",
+  "email": "alice.smith@example.com",
+  "age": 19,
+  "gender": "female"
+}
+
+### Update a student (replace some fields) - id=6 (use created id from response)
+PUT http://127.0.0.1:5001/students/6
+Content-Type: application/json
+
+{
+  "age": 20,
+  "email": "alice.new@example.com"
+}
+
+### Delete a student (id=6)
+DELETE http://127.0.0.1:5001/students/6
+Accept: application/json
