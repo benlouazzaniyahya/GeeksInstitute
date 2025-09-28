@@ -1,0 +1,23 @@
+Requirements & install
+
+Install the minimal Python deps:
+
+pip install Flask psycopg2-binary python-dotenv
+
+
+Set env vars (example for Linux/macOS):
+
+export DATABASE_URL="postgresql://username:password@localhost:5432/restaurant_db"
+export FLASK_SECRET="a-long-secret"
+
+
+Or create a .env file in the project root:
+
+DATABASE_URL=postgresql://username:password@localhost:5432/restaurant_db
+FLASK_SECRET=replace-with-secret
+
+
+Run the app:
+
+python app.py
+# then open http://localhost:5000/menu
