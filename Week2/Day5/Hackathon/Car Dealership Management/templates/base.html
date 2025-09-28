@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Dealership Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .flash {
+            animation: fadeOut 5s forwards;
+            animation-delay: 2s;
+        }
+        @keyframes fadeOut {
+            0% {opacity: 1;}
+            100% {opacity: 0; visibility: hidden;}
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-4">
+                    <div>
+                        <a href="{{ url_for('index') }}" class="flex items-center py-5 px-2 text-white hover:bg-blue-700">
+                            <i class="fas fa-car mr-2"></i>
+                            <span>Car Dealership</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="flex md:hidden">
+                    <button id="mobile-menu-button" class="mobile-menu-button py-5 px-2">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+
+                <!-- Navigation items -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="{{ url_for('index') }}" class="py-5 px-3 text-white hover:bg-blue-700">
+                        <i class="fas fa-home mr-1"></i> Home
+                    </a>
+                    <div class="relative dropdown">
+                        <button class="py-5 px-3 text-white hover:bg-blue-700 flex items-center">
+                            <i class="fas fa-plus-circle mr-1"></i> Add <i class="fas fa-caret-down ml-1"></i>
+                        </button>
+                        <div class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                            <a href="{{ url_for('create_vehicle') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                <i class="fas fa-car mr-2"></i> Vehicle
+                            </a>
+                            <a href="{{ url_for('create_salesperson') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                <i class="fas fa-user-tie mr-2"></i> Salesperson
+                            </a>
+                            <a href="{{ url_for('create_customer') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                <i class="fas fa-user mr-2"></i> Customer
+                            </a>
+                            <a href="{{ url_for('create_sale') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                <i class="fas fa-file-invoice mr-2"></i> Sale
+                            </a>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('stats') }}" class="py-5 px-3 text-white hover:bg-blue-700">
+                        <i class="fas fa-chart-bar mr-1"></i> Statistics
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="{{ url_for('index') }}" class="block py-3 px-4 text-white hover:bg-blue-700">
+                <i class="fas fa-home mr-2"></i> Home
+            </a>
+            <a href="{{ url_for('create_vehicle') }}" class="block py-3 px-4 text-white hover:bg-blue-700">
+                <i class="fas fa-car mr-2"></i> Add Vehicle
+            </a>
+            <a href="{{ url_for('create_salesperson') }}" class="block py-3 px-4 text-white hover:bg-blue-700">
+                <i class="fas fa-user-tie mr-2"></i> Add Salesperson
+            </a>
+            <a href="{{ url_for('create_customer') }}" class="block py-3 px-4 text-white hover:bg-blue-700">
+                <i class="fas fa-user mr-2"></i> Add Customer
+            </a>
+            <a href="{{ url_for('create_sale') }}" class="block py-3 px-4 text-white hover:bg-blue-700">
+                <i class="fas fa-file-invoice mr-2"></i> Add Sale
+            </a>
+            <a href="{{ url_for('stats') }}" class="block py-3 px-4 text-white hover:bg-blue-700">
+                <i class="fas fa-chart-bar mr-2"></i> Statistics
+            </a>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mx-auto px-4 mt-4">
+                {% for category, message in messages %}
+                    <div class="flash p-4 mb-4 rounded-md bg-{{ 'green' if category == 'success' else 'red' }}-100 text-{{ 'green' if category == 'success' else 'red' }}-700">
+                        <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' }} mr-2"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; {{ now.year }} Car Dealership Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
